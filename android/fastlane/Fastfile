@@ -1,23 +1,29 @@
+# Fastlane configuration for Android deployment
+
 default_platform(:android)
 
 platform :android do
-  desc "Submit a new Beta Build to Crashlytics Beta"
-  lane :beta do
-    gradle(task: "clean assembleRelease")
-    crashlytics
-  end
 
-  desc "Distribute a new build to Firebase App Distribution"
+  desc "Build and distribute a new Beta build to Firebase App Distribution"
   lane :firebase_distribution do
+
+    # This lane increments pubspec.yaml build version number
+    flutter_build_increment
+
+    # Cleans the Flutter project using Flutter Version Manager (FVM)
     sh "fvm flutter clean"
+
+    # Builds the Flutter APK in release mode
     sh "fvm flutter build apk --release"
+
+    # Uploads the generated APK to Firebase App Distribution
     firebase_app_distribution(
-      app: "1:276654157414:android:99cfd748f007ac466087a7",
-      firebase_cli_token: ENV["FIREBASE_CLI_TOKEN"],
-      android_artifact_type: "APK",
-      android_artifact_path: "../build/app/outputs/flutter-apk/app-release.apk",
-      testers: "mohamed.ahmad.hassaan@gmail.com",
-      release_notes: "Test Fastlane",
+      app: ENV["APP_ID"], # Firebase project app ID
+      firebase_cli_token: ENV["FIREBASE_CLI_TOKEN"], # Authentication token for Firebase CLI
+      android_artifact_type: "APK", # Specifies that an APK is being uploaded
+      android_artifact_path: "../build/app/outputs/flutter-apk/app-release.apk", # Path to the release APK
+      testers: "mohamed.ahmad.hassaan@gmail.com", # List of testers who will receive the build
+      release_notes: "Test Fastlane" # Notes for the testers about this release
     )
   end
 end
