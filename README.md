@@ -194,35 +194,78 @@ For production apps with large datasets:
 
 ## 📸 Screenshots
 
-> **Note**: Add screenshots here after running the app
+<table>
+  <tr>
+    <td align="center">
+      <img src="screenshots/dashboard.png" width="250" alt="Dashboard Screen"/>
+      <br />
+      <b>Dashboard Screen</b>
+      <br />
+      <sub>View balance, income, expenses with filter options</sub>
+    </td>
+    <td align="center">
+      <img src="screenshots/add_expense.png" width="250" alt="Add Expense Screen"/>
+      <br />
+      <b>Add Expense Screen</b>
+      <br />
+      <sub>Add expenses with category, amount, currency & receipt</sub>
+    </td>
+    <td align="center">
+      <img src="screenshots/category_selection.png" width="250" alt="Category Selection"/>
+      <br />
+      <b>Category Selection</b>
+      <br />
+      <sub>Choose from predefined expense categories</sub>
+    </td>
+  </tr>
+</table>
 
-### Dashboard
-```
-[ Screenshot of dashboard with expenses list ]
-```
-
-### Filtering
-```
-[ Screenshot of filter options ]
-```
-
-### Add Expense
-```
-[ Screenshot of add expense form ]
-```
-
-### Empty State
-```
-[ Screenshot of empty state ]
-```
+### Key UI Features Demonstrated
+- ✅ **Beautiful gradient header** with total balance overview
+- ✅ **Income & Expense cards** showing financial summary
+- ✅ **Filter buttons** (All, This Month, Last 7 Days)
+- ✅ **Recent expenses list** with category icons and amounts
+- ✅ **Floating action button** for quick expense addition
+- ✅ **Category grid/dropdown** with colorful icons
+- ✅ **Multi-currency support** with dropdown selector
+- ✅ **Date picker** for expense date selection
+- ✅ **Receipt upload** with camera/gallery integration
+- ✅ **Success feedback** with green snackbar notification
 
 ## 🚀 Getting Started
 
 ### Prerequisites
-- Flutter SDK: `>=3.3.1 <4.0.0`
+- Flutter SDK: `3.32.0` (managed via FVM)
 - Dart SDK: `>=3.3.1 <4.0.0`
 - Android Studio / Xcode (for mobile development)
 - Git
+- **[FVM (Flutter Version Manager)](https://fvm.app/)** (recommended) - Optional but recommended for version consistency
+
+### Flutter Version Management
+
+This project uses **FVM (Flutter Version Manager)** to ensure consistent Flutter versions across different development environments. The Flutter version is locked at `3.32.0`.
+
+#### Option 1: Using FVM (Recommended)
+If you have FVM installed, prefix all `flutter` commands with `fvm`:
+```bash
+# Install FVM globally
+dart pub global activate fvm
+
+# Install the project's Flutter version
+fvm install
+
+# Use FVM for all Flutter commands
+fvm flutter pub get
+fvm flutter run
+```
+
+#### Option 2: Without FVM
+If you don't have FVM, you can use Flutter commands directly, but ensure you have Flutter `3.32.0` installed:
+```bash
+# Use regular Flutter commands
+flutter pub get
+flutter run
+```
 
 ### Installation
 
@@ -234,36 +277,46 @@ For production apps with large datasets:
 
 2. **Install dependencies**
    ```bash
+   # With FVM
+   fvm flutter pub get
+   
+   # Without FVM
    flutter pub get
    ```
 
 3. **Run code generation** (for freezed, json_serializable, hive, retrofit)
    ```bash
+   # With FVM
+   fvm flutter pub run build_runner build --delete-conflicting-outputs
+   
+   # Without FVM
    flutter pub run build_runner build --delete-conflicting-outputs
    ```
 
 4. **Run the app**
    ```bash
-   # Run on connected device/emulator
+   # With FVM
+   fvm flutter run
+   fvm flutter run -d <device_id>
+   fvm flutter run --release
+   
+   # Without FVM
    flutter run
-   
-   # Run on specific device
    flutter run -d <device_id>
-   
-   # Run in release mode
    flutter run --release
    ```
 
 ### Build APK/IPA
 
 ```bash
-# Android APK
+# With FVM
+fvm flutter build apk --release
+fvm flutter build appbundle --release
+fvm flutter build ios --release
+
+# Without FVM
 flutter build apk --release
-
-# Android App Bundle
 flutter build appbundle --release
-
-# iOS (requires Mac)
 flutter build ios --release
 ```
 
@@ -271,13 +324,15 @@ flutter build ios --release
 
 ### Run Tests
 ```bash
-# Run all tests
-flutter test
+# With FVM
+fvm flutter test
+fvm flutter test --coverage
 
-# Run with coverage
+# Without FVM
+flutter test
 flutter test --coverage
 
-# View coverage report
+# View coverage report (same for both)
 genhtml coverage/lcov.info -o coverage/html
 open coverage/html/index.html
 ```
@@ -298,6 +353,37 @@ test/
 - **BLoC Tests**: Using `bloc_test` package
 - **Mocking**: `mocktail` for dependency mocking
 - **Coverage**: Focusing on business logic (BLoCs, repositories)
+
+## 🚀 CI/CD Pipeline
+
+### GitHub Actions
+
+This project includes a GitHub Actions workflow for automated Android builds and Firebase App Distribution.
+
+**Workflow File**: `.github/workflows/android_fastlane_firebase_app_distribution_workflow.yml`
+
+#### Features
+- ✅ **Automated Builds**: Triggers on push to `main` branch
+- ✅ **FVM Integration**: Uses project's Flutter version (3.32.0) automatically
+- ✅ **Fastlane**: Automates build and deployment process
+- ✅ **Firebase App Distribution**: Distributes builds to testers
+- ✅ **Java 21**: Uses latest Temurin distribution
+- ✅ **Ruby 3.3.4**: For Fastlane dependencies
+
+#### Workflow Steps
+1. Checkout repository code
+2. Set up Java 21 and Ruby 3.3.4
+3. Install FVM and project's Flutter SDK version
+4. Run Fastlane for building and distribution
+5. Upload APK to Firebase App Distribution
+
+#### Setup Requirements
+To use the CI/CD pipeline, configure these GitHub Secrets:
+- `FIREBASE_APP_ID`: Firebase App ID
+- `FIREBASE_TOKEN`: Firebase CLI token
+- Additional secrets as needed for signing
+
+For more details, check the workflow file in `.github/workflows/`.
 
 ## 📦 Dependencies
 
@@ -345,36 +431,6 @@ test/
 5. **Currency Conversion on Save**
    - Convert to USD when saving expense
    - Trade-off: Exchange rates not updated for old expenses
-
-### Assumptions
-
-1. **Dataset Size**: Assuming <1000 expenses per user
-2. **Internet for Currency**: Non-USD currencies require internet connection
-3. **USD as Base**: All calculations use USD for consistency
-4. **Single User**: No multi-user support or authentication
-5. **Receipt Storage**: Receipt paths stored as strings (file system)
-6. **Categories Fixed**: Predefined categories (no custom categories)
-7. **Income Static**: Demo assumes fixed monthly income
-8. **No Backup**: Data only stored locally (no cloud sync)
-
-## 🐛 Known Issues & Limitations
-
-### Known Bugs
-- ⚠️ None currently identified
-
-### Unimplemented Features
-- ❌ **User Authentication**: No login/signup
-- ❌ **Cloud Sync**: No backup/restore functionality
-- ❌ **Income Tracking**: Income is hardcoded
-- ❌ **Custom Categories**: Fixed category list
-- ❌ **Budget Limits**: No spending limit alerts
-- ❌ **Charts/Analytics**: No visual spending analytics
-- ❌ **Export Data**: No CSV/PDF export
-- ❌ **Search**: No search functionality
-- ❌ **Recurring Expenses**: No support for recurring transactions
-- ❌ **Multi-Device**: No cross-device synchronization
-- ❌ **Notifications**: No spending reminders
-- ❌ **Dark Mode**: Only light theme available
 
 ### Future Enhancements
 1. Add visual analytics (pie charts, bar graphs)
