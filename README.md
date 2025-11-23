@@ -53,6 +53,11 @@ lib/
 2. **Domain Layer** (implicit): Business logic within BLoCs and repositories
 3. **Data Layer** (`data/`): Models, API services, local storage, repositories
 
+## 📸 Screenshots
+<img src="https://github.com/user-attachments/assets/ed03d8c7-ffe7-487a-a5ac-b91c68f0da05" width="300" />
+<img src="https://github.com/user-attachments/assets/ce0ecd08-2811-4915-9a65-4ed472d13555" width="300" />
+<img src="https://github.com/user-attachments/assets/56bb2d21-0b7d-4e42-aa2c-35218332a1d5" width="300" />
+
 ## 🔄 State Management
 
 The app uses **BLoC (Business Logic Component)** pattern with `flutter_bloc`:
@@ -191,34 +196,6 @@ For production apps with large datasets:
 - **Responsive**: Uses `flutter_screenutil` for adaptive sizing
 - **Colors**: Material Design inspired palette
 - **Animations**: Smooth transitions and loading states
-
-## 📸 Screenshots
-
-<table>
-  <tr>
-    <td align="center">
-      <img src="screenshots/dashboard.png" width="250" alt="Dashboard Screen"/>
-      <br />
-      <b>Dashboard Screen</b>
-      <br />
-      <sub>View balance, income, expenses with filter options</sub>
-    </td>
-    <td align="center">
-      <img src="screenshots/add_expense.png" width="250" alt="Add Expense Screen"/>
-      <br />
-      <b>Add Expense Screen</b>
-      <br />
-      <sub>Add expenses with category, amount, currency & receipt</sub>
-    </td>
-    <td align="center">
-      <img src="screenshots/category_selection.png" width="250" alt="Category Selection"/>
-      <br />
-      <b>Category Selection</b>
-      <br />
-      <sub>Choose from predefined expense categories</sub>
-    </td>
-  </tr>
-</table>
 
 ### Key UI Features Demonstrated
 - ✅ **Beautiful gradient header** with total balance overview
