@@ -408,42 +408,6 @@ For more details, check the workflow file in `.github/workflows/`.
 - `shared_preferences: ^2.2.2` - Simple key-value storage
 - `uuid: ^4.5.2` - Unique ID generation
 
-## ⚖️ Trade-offs & Assumptions
-
-### Trade-offs
-
-1. **Local Pagination vs API Pagination**
-   - Chose local pagination for simplicity and better offline support
-   - Trade-off: Not scalable for very large datasets
-
-2. **Hive vs SQLite**
-   - Chose Hive for faster development and pure Dart implementation
-   - Trade-off: Less mature ecosystem, no complex queries
-
-3. **BLoC vs Riverpod/Provider**
-   - Chose BLoC for explicit state management and testing
-   - Trade-off: More boilerplate code
-
-4. **Fixed Income Value**
-   - Hardcoded income value (10840.0) for demo purposes
-   - Trade-off: Would need income tracking feature in production
-
-5. **Currency Conversion on Save**
-   - Convert to USD when saving expense
-   - Trade-off: Exchange rates not updated for old expenses
-
-### Future Enhancements
-1. Add visual analytics (pie charts, bar graphs)
-2. Implement budget tracking with alerts
-3. Add income tracking feature
-4. Cloud backup with Firebase
-5. Search and advanced filtering
-6. Dark mode support
-7. Export reports (PDF/CSV)
-8. Recurring expense templates
-9. OCR for receipt parsing
-10. Multi-language support
-
 ## 🤝 Contributing
 
 Contributions are welcome! Please follow these steps:
