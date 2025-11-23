@@ -141,37 +141,54 @@ class _DashboardView extends StatelessWidget {
                           ),
                         ),
                       ),
-                      // Expenses List
-                      SliverPadding(
-                        padding: const EdgeInsets.symmetric(horizontal: 20),
-                        sliver: SliverList(
-                          delegate: SliverChildBuilderDelegate(
-                            (context, index) {
-                              if (index < displayedExpenses.length) {
-                                return ExpenseListViewItem(
-                                  expense: displayedExpenses[index],
-                                );
-                              } else if (hasMoreData) {
-                                // Load More Button
-                                return Padding(
-                                  padding: const EdgeInsets.all(16.0),
-                                  child: ElevatedButton(
-                                    onPressed: () {
-                                      context.read<DashboardBloc>().add(
-                                          const DashboardEvent
-                                              .loadMoreExpenses());
-                                    },
-                                    child: const Text('Load More'),
-                                  ),
-                                );
-                              }
-                              return null;
-                            },
-                            childCount: displayedExpenses.length +
-                                (hasMoreData ? 1 : 0),
+
+                      if (displayedExpenses.isEmpty)
+                        SliverToBoxAdapter(
+                          child: Padding(
+                            padding: const EdgeInsets.all(20.0),
+                            child: Center(
+                              child: Text(
+                                'No expenses found for the selected filter.',
+                                style: TextStyle(
+                                  fontSize: 16.sp,
+                                  color: Colors.grey,
+                                ),
+                              ),
+                            ),
+                          ),
+                        )
+                      else
+                        // Expenses List
+                        SliverPadding(
+                          padding: const EdgeInsets.symmetric(horizontal: 20),
+                          sliver: SliverList(
+                            delegate: SliverChildBuilderDelegate(
+                              (context, index) {
+                                if (index < displayedExpenses.length) {
+                                  return ExpenseListViewItem(
+                                    expense: displayedExpenses[index],
+                                  );
+                                } else if (hasMoreData) {
+                                  // Load More Button
+                                  return Padding(
+                                    padding: const EdgeInsets.all(16.0),
+                                    child: ElevatedButton(
+                                      onPressed: () {
+                                        context.read<DashboardBloc>().add(
+                                            const DashboardEvent
+                                                .loadMoreExpenses());
+                                      },
+                                      child: const Text('Load More'),
+                                    ),
+                                  );
+                                }
+                                return null;
+                              },
+                              childCount: displayedExpenses.length +
+                                  (hasMoreData ? 1 : 0),
+                            ),
                           ),
                         ),
-                      ),
                     ],
                   ),
                 );
