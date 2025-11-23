@@ -1,0 +1,23 @@
+default_platform(:android)
+
+platform :android do
+  desc "Submit a new Beta Build to Crashlytics Beta"
+  lane :beta do
+    gradle(task: "clean assembleRelease")
+    crashlytics
+  end
+
+  desc "Distribute a new build to Firebase App Distribution"
+  lane :firebase_distribution do
+    sh "fvm flutter clean"
+    sh "fvm flutter build apk --release"
+    firebase_app_distribution(
+      app: "1:276654157414:android:99cfd748f007ac466087a7",
+      firebase_cli_token: ENV["FIREBASE_CLI_TOKEN"],
+      android_artifact_type: "APK",
+      android_artifact_path: "../build/app/outputs/flutter-apk/app-release.apk",
+      testers: "mohamed.ahmad.hassaan@gmail.com",
+      release_notes: "Test Fastlane",
+    )
+  end
+end

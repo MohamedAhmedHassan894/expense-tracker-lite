@@ -135,14 +135,14 @@ void main() {
         bloc.add(const AddExpenseEvent.saveExpense());
       },
       expect: () => [
-        isA<AddExpenseState>(), // First state after categoryChanged or amountChanged
+        isA<AddExpenseState>(), // First emission
         predicate<AddExpenseState>((state) {
           return state.maybeWhen(
             initial: (_, __, ___, ____, _____, categoryError, amountError) =>
                 categoryError.isNotEmpty && amountError.isNotEmpty,
             orElse: () => false,
           );
-        }), // saveExpense with validation errors
+        }), // Second emission with validation errors
       ],
     );
 

@@ -23,8 +23,8 @@ if (flutterVersionName == null) {
 }
 
 android {
-    namespace "com.example.expense_tracker"
-    compileSdk flutter.compileSdkVersion
+    namespace "com.example.architecture_impl"
+    compileSdkVersion 35
     ndkVersion flutter.ndkVersion
 
     compileOptions {
